@@ -4,11 +4,11 @@ require('dotenv').config();
 // .env faylingizdan BOT_TOKEN ni oladi
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
-// Web App manzili (Ilovangiz yuklangan URL manzil bo'lishi kerak, masalan Vercel yoki GitHub Pages havolasi)
-const WEB_APP_URL = process.env.WEB_APP_URL || 'https://sizning-saytingiz.uz';
+// Web App manzili (.env ichidagi MINIAPP_URL yoki havola)
+const WEB_APP_URL = process.env.MINIAPP_URL || 'https://spiffy-sunburst-80ea7b.netlify.app';
 
 bot.start((ctx) => {
-    ctx.reply('Assalomu alaykum! Top Up botimizga xush kelibsiz. Quyidagi tugma orqali do'konni ochishingiz mumkin:', {
+    ctx.reply('Assalomu alaykum! Top Up botimizga xush kelibsiz. Quyidagi tugma orqali do\'konni ochishingiz mumkin:', {
         reply_markup: {
             inline_keyboard: [
                 [
