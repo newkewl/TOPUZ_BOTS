@@ -1,43 +1,42 @@
-// Telegram Web App obyektini ishga tushiramiz
+// Telegram Web App API faollashtirish
 const tg = window.Telegram.WebApp;
-
-// Ilova tayyor bo'lganini Telegram'ga bildiramiz
 tg.ready();
-tg.expand(); // Oynani to'liq ekranga ochish
+tg.expand(); // Ekranni to'liq yoyish
 
-// Telegram'dan foydalanuvchi ma'lumotlarini olish
-if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-    const user = tg.initDataUnsafe.user;
-    
-    // Interfeysga foydalanuvchi ma'lumotlarini yozish
-    document.getElementById('user-name').innerText = user.first_name || "Foydalanuvchi";
-    document.getElementById('user-tag').innerText = user.username ? `@${user.username}` : '';
-    
-    if (user.first_name) {
-        document.getElementById('user-avatar').innerText = user.first_name.charAt(0).toUpperCase();
+// Foydalanuvchi ma'lumotlarini olish
+const user = tg.initDataUnsafe?.user;
+
+if (user) {
+    // Ism yoki usernameni htmlga chiqarish
+    const userNameElement = document.getElementById('user-name');
+    if (userNameElement) {
+        userNameElement.textContent = user.username ? `@${user.username}` : `${user.first_name}`;
+    }
+
+    // Avatar bosh harfini o'zgartirish
+    const avatarElement = document.getElementById('user-avatar');
+    if (avatarElement) {
+        const firstLetter = user.first_name ? user.first_name.charAt(0).toUpperCase() : 'U';
+        avatarElement.textContent = firstLetter;
     }
 }
 
-// Tugmalarga bosilish hodisasini (Click event) biriktirish
-document.getElementById('btn-topup').addEventListener('click', () => {
-    tg.showAlert("Hisobni to'ldirish bo'limi yaqinda ishga tushadi!");
-});
-
-document.getElementById('btn-bonus').addEventListener('click', () => {
-    tg.showPopup({
-        title: 'Bonus Kod',
-        message: 'Hozircha faol bonus kodlar mavjud emas.',
-        buttons: [{type: 'ok'}]
+// "Hisobni to'ldirish" tugmasi bosilganda
+const topupBtn = document.getElementById('topup-btn');
+if (topupBtn) {
+    topupBtn.addEventListener('click', () => {
+        tg.showAlert("To'lov tizimi (Click/Payme) tez orada ishga tushadi!");
     });
-});
+}
 
-document.getElementById('btn-support').addEventListener('click', () => {
-    // Bot adminiga yo'naltirish yoki xabar yuborish
-    tg.sendData("support_request"); 
-    tg.close(); // Xabarni yuborib ilovani yopish
-});
-
-// O'yinlar tanlanganda ishlaydigan funksiya
-function selectGame(gameName) {
-    tg.showAlert(`${gameName.toUpperCase()} bo'limi tanlandi. Tez orada mahsulotlar ro'yxati qo'shiladi.`);
+// "Bonus kodlar" tugmasi bosilganda
+const bonusBtn = document.getElementById('bonus-btn');
+if (bonusBtn) {
+    bonusBtn.addEventListener('click', () => {
+        tg.showPopup({
+            title: 'Bonus tizimi',
+            message: 'Hozircha faol bonus kodlar mavjud emas.',
+            buttons: [{ type: 'ok', text: 'Yopish' }]
+        });
+    });
 }
