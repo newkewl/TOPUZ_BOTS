@@ -9,12 +9,12 @@ if (tg) {
 }
 
 const GAMES = [
-  { id: "pubgm", name: "PUBG MOBILE", tag: "Global", img: "https://placehold.co/300x340/1c2340/ffffff?text=PUBG" },
-  { id: "freefire", name: "FREE FIRE", tag: "SNG", img: "https://placehold.co/300x340/1c2340/ffffff?text=Free+Fire" },
-  { id: "mlbb", name: "MOBILE LEGENDS", tag: "Global", img: "https://placehold.co/300x340/1c2340/ffffff?text=MLBB" },
-  { id: "standoff2", name: "STAND OFF 2", tag: "Global", img: "https://placehold.co/300x340/1c2340/ffffff?text=Standoff+2" },
-  { id: "tgstars", name: "TG STARS", tag: "Avto", img: "https://placehold.co/300x340/1c2340/ffc531?text=Stars" },
-  { id: "tgpremium", name: "TG PREMIUM", tag: "Avto", img: "https://placehold.co/300x340/1c2340/ffc531?text=Premium" },
+  { id: "pubgm", name: "PUBG MOBILE", tag: "Global", color: "#4f5bff" },
+  { id: "freefire", name: "FREE FIRE", tag: "SNG", color: "#ff5b4f" },
+  { id: "mlbb", name: "MOBILE LEGENDS", tag: "Global", color: "#7b5cff" },
+  { id: "standoff2", name: "STAND OFF 2", tag: "Global", color: "#4fb3ff" },
+  { id: "tgstars", name: "TG STARS", tag: "Avto", color: "#ffc531" },
+  { id: "tgpremium", name: "TG PREMIUM", tag: "Avto", color: "#ffc531" },
 ];
 
 let state = {
@@ -49,8 +49,8 @@ async function loadMe() {
 function renderGames() {
   const grid = document.getElementById("gamesGrid");
   grid.innerHTML = GAMES.map(g => `
-    <div class="game-card" data-id="${g.id}">
-      <img src="${g.img}" alt="${g.name}">
+    <div class="game-card" data-id="${g.id}" style="background:${g.color}22">
+      <div class="game-icon" style="background:${g.color}">${g.name.charAt(0)}</div>
       <span class="game-tag">${g.tag}</span>
       <span class="game-name">${g.name}</span>
     </div>
