@@ -3,51 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Top Up Uz</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Telegram Mini App skriptini ulash -->
+    <title>Top Up Bot Mini App</title>
+    <!-- Telegram Web App Scripti (Shart!) -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .profile-card {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            border-radius: 20px;
+            padding: 20px;
+            width: 90%;
+            max-width: 350px;
+            box-shadow: 0 4px 15px rgba(0,242,254,0.3);
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .avatar {
+            width: 50px;
+            height: 50px;
+            background-color: #555;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        .username-text {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .balance-section {
+            margin-bottom: 20px;
+        }
+        .balance-title {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        .balance-amount {
+            font-size: 32px;
+            font-weight: bold;
+        }
+        .buttons-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 12px;
+            color: white;
+            padding: 15px 10px;
+            text-align: center;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            transition: background 0.2s;
+        }
+        .nav-btn:active {
+            background: rgba(255, 255, 255, 0.4);
+        }
+        .icon {
+            font-size: 20px;
+        }
+    </style>
 </head>
 <body>
-    <div class="app-container">
-        <!-- Profil qismi -->
-        <div class="profile-section">
-            <div class="avatar" id="user-avatar">U</div>
-            <div class="user-info">
-                <div class="username" id="user-name">Foydalanuvchi</div>
-                <div class="user-tag" id="user-tag">@username</div>
-            </div>
-            <div class="coin-badge">🟡 <span id="user-coins">0</span></div>
-        </div>
 
-        <!-- Balans qismi -->
-        <div class="balance-card">
-            <p class="balance-title">Balans</p>
-            <h1 class="balance-amount"><span id="balance-value">0</span> <span class="currency">so'm</span></h1>
-            
-            <div class="action-buttons">
-                <button class="action-btn" id="btn-topup">
-                    <span class="icon">💳</span>
-                    <span>Hisobni to'ldirish</span>
-                </button>
-                <button class="action-btn" id="btn-bonus">
-                    <span class="icon">📚</span>
-                    <span>Bonus kodlar</span>
-                </button>
-                <button class="action-btn" id="btn-support">
-                    <span class="icon">💬</span>
-                    <span>Yordam</span>
-                </button>
+    <div class="profile-card">
+        <div class="user-info">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <div class="avatar" id="user-avatar">U</div>
+                <span class="username-text" id="user-name">Foydalanuvchi</span>
+            </div>
+            <div style="background: rgba(0,0,0,0.4); padding: 5px 10px; border-radius: 15px; font-size: 14px;">
+                🪙 <span id="user-coins">0</span>
             </div>
         </div>
 
-        <!-- Mahsulotlar bo'limi -->
-        <div class="shop-section">
-            <h3>O'yinlar va Xizmatlar</h3>
-            <div class="games-grid">
-                <div class="game-item" onclick="selectGame('pubg')">PUBG Mobile</div>
-                <div class="game-item" onclick="selectGame('freefire')">Free Fire</div>
-                <div class="game-item" onclick="selectGame('stars')">TG Stars</div>
+        <div class="balance-section">
+            <div class="balance-title">Balans</div>
+            <div class="balance-amount"><span id="user-balance">0</span> so'm</div>
+        </div>
+
+        <div class="buttons-grid">
+            <div class="nav-btn" id="topup-btn">
+                <span class="icon">💳</span>
+                <span>Hisobni to'ldirish</span>
+            </div>
+            <div class="nav-btn" id="bonus-btn">
+                <span class="icon">🥞</span>
+                <span>Bonus kodlar</span>
             </div>
         </div>
     </div>
