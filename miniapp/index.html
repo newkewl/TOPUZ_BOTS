@@ -1,201 +1,57 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>TopUpUzBot</title>
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
-<link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Up Uz</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Telegram Mini App skriptini ulash -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-
-  <!-- LOADING SCREEN -->
-  <div id="loading" class="loading">
-    <div class="mascot">
-      <svg viewBox="0 0 120 120" width="120" height="120">
-        <defs>
-          <linearGradient id="gemGrad" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#3FE4D6" />
-            <stop offset="55%" stop-color="#5B6CFF" />
-            <stop offset="100%" stop-color="#8C5CF7" />
-          </linearGradient>
-        </defs>
-        <polygon points="60,8 108,44 90,110 30,110 12,44" fill="url(#gemGrad)" stroke="#ffffff33" stroke-width="1.5"/>
-        <polygon points="60,8 108,44 60,58" fill="#ffffff22"/>
-        <polygon points="60,8 12,44 60,58" fill="#00000022"/>
-        <circle cx="46" cy="55" r="6.5" fill="#0A0E1B"/>
-        <circle cx="76" cy="55" r="6.5" fill="#0A0E1B"/>
-        <circle cx="48" cy="53" r="2" fill="#fff"/>
-        <circle cx="78" cy="53" r="2" fill="#fff"/>
-        <path d="M48 72 Q60 82 74 72" stroke="#0A0E1B" stroke-width="4" fill="none" stroke-linecap="round"/>
-      </svg>
-    </div>
-    <div class="loading-title">topupbot</div>
-    <div class="progress-track"><div id="progressBar" class="progress-fill"></div></div>
-    <div class="loading-sub">Yuklanmoqda…</div>
-  </div>
-
-  <!-- MAIN APP -->
-  <div id="app" class="app hidden">
-
-    <div class="header">
-      <div class="profile">
-        <div id="avatar" class="avatar">U</div>
-        <div>
-          <div id="userName" class="username">Foydalanuvchi</div>
-          <div id="userHandle" class="userhandle">@username</div>
+    <div class="app-container">
+        <!-- Profil qismi -->
+        <div class="profile-section">
+            <div class="avatar" id="user-avatar">U</div>
+            <div class="user-info">
+                <div class="username" id="user-name">Foydalanuvchi</div>
+                <div class="user-tag" id="user-tag">@username</div>
+            </div>
+            <div class="coin-badge">🟡 <span id="user-coins">0</span></div>
         </div>
-      </div>
-      <div class="coin-pill">
-        <span class="coin-dot"></span>
-        <span id="coinCount">0</span>
-      </div>
-    </div>
 
-    <div class="scroll">
-
-      <!-- HOME TAB -->
-      <div id="tab-home" class="tab-panel">
+        <!-- Balans qismi -->
         <div class="balance-card">
-          <div class="sweep"></div>
-          <div class="balance-label">Balans</div>
-          <div class="balance-value"><span id="balanceValue">0</span><span class="balance-unit">so'm</span></div>
-          <div class="action-row">
-            <button class="action-btn" data-open="sheet-topup">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><rect x="2" y="6" width="20" height="13" rx="2" stroke="#fff" stroke-width="2"/><path d="M2 10h20" stroke="#fff" stroke-width="2"/></svg>
-              <span>Hisobni to'ldirish</span>
-            </button>
-            <button class="action-btn" data-open="sheet-promo">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M4 9V5a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 000 4v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4a2 2 0 000-4z" stroke="#fff" stroke-width="2"/></svg>
-              <span>Bonus kodlar</span>
-            </button>
-            <button class="action-btn" data-open="sheet-support">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" stroke="#fff" stroke-width="2"/></svg>
-              <span>Yordam</span>
-            </button>
-          </div>
-        </div>
-
-        <div class="segmented">
-          <button class="seg-btn active" data-sub="games">O'yinlar</button>
-          <button class="seg-btn" data-sub="promo">Promokodlar</button>
-        </div>
-
-        <div id="sub-games" class="games-grid"></div>
-
-        <div id="sub-promo" class="promo-list hidden">
-          <div class="promo-item">
-            <div>
-              <div class="promo-code">WELCOME10</div>
-              <div class="promo-desc ok">10 000 so'm bonus</div>
+            <p class="balance-title">Balans</p>
+            <h1 class="balance-amount"><span id="balance-value">0</span> <span class="currency">so'm</span></h1>
+            
+            <div class="action-buttons">
+                <button class="action-btn" id="btn-topup">
+                    <span class="icon">💳</span>
+                    <span>Hisobni to'ldirish</span>
+                </button>
+                <button class="action-btn" id="btn-bonus">
+                    <span class="icon">📚</span>
+                    <span>Bonus kodlar</span>
+                </button>
+                <button class="action-btn" id="btn-support">
+                    <span class="icon">💬</span>
+                    <span>Yordam</span>
+                </button>
             </div>
-          </div>
-          <div class="promo-item">
-            <div>
-              <div class="promo-code">SUMMER25</div>
-              <div class="promo-desc">Muddati tugagan</div>
+        </div>
+
+        <!-- Mahsulotlar bo'limi -->
+        <div class="shop-section">
+            <h3>O'yinlar va Xizmatlar</h3>
+            <div class="games-grid">
+                <div class="game-item" onclick="selectGame('pubg')">PUBG Mobile</div>
+                <div class="game-item" onclick="selectGame('freefire')">Free Fire</div>
+                <div class="game-item" onclick="selectGame('stars')">TG Stars</div>
             </div>
-          </div>
         </div>
-      </div>
-
-      <!-- HISTORY TAB -->
-      <div id="tab-history" class="tab-panel hidden">
-        <div class="section-title">Tarix</div>
-        <div id="historyList"></div>
-      </div>
-
-      <!-- SETTINGS TAB -->
-      <div id="tab-settings" class="tab-panel hidden">
-        <div class="section-title">Sozlamalar</div>
-        <div class="settings-card">
-          <div class="settings-row"><span>Til</span><span class="muted">O'zbekcha</span></div>
-          <div class="settings-row"><span>Bildirishnomalar</span><button id="toggleNotif" class="toggle on"><span class="knob"></span></button></div>
-          <div class="settings-row"><span>Tovush effektlari</span><button id="toggleSound" class="toggle"><span class="knob"></span></button></div>
-          <div class="settings-row"><span>Ilova versiyasi</span><span class="muted">1.4.2</span></div>
-        </div>
-      </div>
-
-      <!-- RENT TAB -->
-      <div id="tab-rent" class="tab-panel hidden">
-        <div class="section-title">Ijaraga</div>
-        <div class="empty-state">
-          <div class="empty-icon">🗂</div>
-          <div class="empty-title">Tez orada</div>
-          <div class="empty-desc">Akkaunt ijarasi xizmati hozircha ishlab chiqilmoqda</div>
-        </div>
-      </div>
-
     </div>
 
-    <div class="bottom-nav">
-      <button class="nav-btn active" data-tab="home"><span class="nav-ico">🏠</span><span>Bosh sahifa</span></button>
-      <button class="nav-btn" data-tab="history"><span class="nav-ico">🕘</span><span>Tarix</span></button>
-      <button class="nav-btn" data-tab="settings"><span class="nav-ico">⚙️</span><span>Sozlamalar</span></button>
-      <button class="nav-btn" data-tab="rent"><span class="nav-ico">🧩</span><span>Ijaraga</span></button>
-    </div>
-
-    <div id="toast" class="toast hidden"></div>
-  </div>
-
-  <!-- SHEETS (overlay, shared) -->
-  <div id="overlay" class="overlay hidden"></div>
-
-  <div id="sheet-topup" class="sheet hidden">
-    <div class="sheet-handle"></div>
-    <div class="sheet-header"><span>Hisobni to'ldirish</span><button class="sheet-close" data-close>✕</button></div>
-    <div class="preset-grid">
-      <button class="preset-btn" data-amt="10000">10 000 so'm</button>
-      <button class="preset-btn" data-amt="25000">25 000 so'm</button>
-      <button class="preset-btn" data-amt="50000">50 000 so'm</button>
-      <button class="preset-btn" data-amt="100000">100 000 so'm</button>
-    </div>
-    <div class="field">
-      <div class="field-label">Boshqa summa</div>
-      <input id="customAmt" type="number" placeholder="Masalan: 75000" />
-    </div>
-    <div class="hint">To'lov CLICK, PAYME yoki bank kartasi orqali amalga oshiriladi.</div>
-    <button id="confirmTopup" class="primary-btn">To'ldirish</button>
-  </div>
-
-  <div id="sheet-promo" class="sheet hidden">
-    <div class="sheet-handle"></div>
-    <div class="sheet-header"><span>Bonus kodlar</span><button class="sheet-close" data-close>✕</button></div>
-    <div class="field">
-      <div class="field-label">Promo kod</div>
-      <input id="promoInput" type="text" placeholder="Masalan: WELCOME10" />
-    </div>
-    <div id="promoErr" class="error hidden"></div>
-    <button id="confirmPromo" class="primary-btn">Faollashtirish</button>
-  </div>
-
-  <div id="sheet-support" class="sheet hidden">
-    <div class="sheet-handle"></div>
-    <div class="sheet-header"><span>Qo'llab-quvvatlash</span><button class="sheet-close" data-close>✕</button></div>
-    <p class="hint" style="margin-bottom:16px">Savol yoki muammo bo'lsa, operatorlarimiz 24/7 yordam berishga tayyor.</p>
-    <div class="settings-row"><span class="muted">Telegram</span><span>@topupbot_support</span></div>
-    <div class="settings-row"><span class="muted">Ish vaqti</span><span>24/7</span></div>
-    <div class="settings-row" style="border-bottom:none"><span class="muted">Javob berish vaqti</span><span>~5 daqiqa</span></div>
-    <button class="primary-btn" style="margin-top:16px" data-close>Yozish</button>
-  </div>
-
-  <div id="sheet-game" class="sheet hidden">
-    <div class="sheet-handle"></div>
-    <div class="sheet-header"><span id="gameSheetTitle">O'yin</span><button class="sheet-close" data-close>✕</button></div>
-    <div id="gameSheetBody"></div>
-  </div>
-
-  <div id="sheet-success" class="sheet hidden">
-    <div class="sheet-handle"></div>
-    <div class="sheet-header"><span>Muvaffaqiyatli!</span><button class="sheet-close" data-close>✕</button></div>
-    <div class="success-box">
-      <div class="success-check">✓</div>
-      <div id="successTitle" class="success-title"></div>
-      <div id="successDesc" class="success-desc"></div>
-    </div>
-    <button class="primary-btn" data-close>Ajoyib</button>
-  </div>
-
-<script src="app.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
